@@ -96,6 +96,26 @@ The repository is built with [colcon](https://colcon.readthedocs.io/) and `ament
 - **Library dependencies:** Eigen3
 - **For Python bindings or ROS 2 nodes:** ROS 2 (Humble or Jazzy)
 
+Install the additional system dependencies via apt. When you build with `colcon --packages-up-to <one of the packages in this repo>` (as shown in the sections below), only Boost is needed:
+
+```bash
+sudo apt install libboost-dev
+```
+
+If you instead build the full workspace (including all submodule packages), also install the following ROS 2 message packages (with a sourced ROS 2 environment so that `ROS_DISTRO` is set):
+
+```bash
+sudo apt install ros-${ROS_DISTRO}-can-msgs \
+                 ros-${ROS_DISTRO}-ros2-socketcan \
+                 ros-${ROS_DISTRO}-geographic-msgs
+```
+
+Make sure all git submodules are properly initialized before building:
+
+```bash
+git submodule update --init --recursive
+```
+
 ### 3.2. C++ Library and ROS 2 Nodes
 
 ```bash
@@ -116,6 +136,20 @@ colcon build --packages-up-to tum_road_geometry_coupling_py --cmake-args -DCMAKE
 ```
 
 After sourcing the install folder, the Python module `tum_road_geometry_coupling_py` becomes importable.
+
+### 3.4. Docker
+
+A [`Dockerfile`](./Dockerfile) is provided that builds on top of `ros:jazzy`, installs all required apt dependencies, fetches the submodules, and compiles the workspace inside the image. From the repository root:
+
+```bash
+docker build -t road-geometry-coupling .
+```
+
+To start a container with the workspace already sourced:
+
+```bash
+docker run -it --rm road-geometry-coupling
+```
 
 ## 4. Usage
 
