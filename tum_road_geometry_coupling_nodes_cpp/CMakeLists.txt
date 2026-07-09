@@ -7,19 +7,15 @@ cmake_minimum_required(VERSION 3.12)
 set(PROJECT_NAME tum_road_geometry_coupling_nodes_cpp)
 set(EXECUTABLE_NAMES
   road_geometry_coupler_node
-  external_influence_generator_node
 )
 set(NODE_LIBRARY_PATHS
   src/road_geometry_coupler_node.cpp
-  src/external_influence_generator_node.cpp
 )
 set(COMPONENT_PATHS
   components/road_geometry_coupler_component.cpp
-  components/external_influence_generator_component.cpp
 )
 set(COMPONENT_NAMES
   RoadGeometryCouplerComponent
-  ExternalInfluenceGeneratorComponent
 )
 
 set(NODE_DEPENDENCIES
@@ -120,14 +116,14 @@ install(TARGETS ${PROJECT_NAME}_components
 )
 # section: BUILD STANDALONE NODE EXECUTABLE FROM CSV (NO rclcpp_components)
 # ====================================================================
-# A thin executable that constructs ExternalInfluenceGeneratorNode directly
-# from a TrackData CSV. Used by the bundled demo launch and by anyone who
-# wants to run the node without a track_handler_cpp configuration.
-add_executable(external_influence_generator_node_from_csv
-  src/external_influence_generator_node_from_csv.cpp)
-target_link_libraries(external_influence_generator_node_from_csv ${PROJECT_NAME})
-ament_target_dependencies(external_influence_generator_node_from_csv ${NODE_DEPENDENCIES})
-install(TARGETS external_influence_generator_node_from_csv
+# A thin executable that constructs RoadGeometryCouplerNode directly from a
+# TrackData CSV. Used by the bundled demo launch and by anyone who wants to run
+# the node without a track_handler_cpp configuration.
+add_executable(road_geometry_coupler_node_from_csv
+  src/road_geometry_coupler_node_from_csv.cpp)
+target_link_libraries(road_geometry_coupler_node_from_csv ${PROJECT_NAME})
+ament_target_dependencies(road_geometry_coupler_node_from_csv ${NODE_DEPENDENCIES})
+install(TARGETS road_geometry_coupler_node_from_csv
         DESTINATION lib/${PROJECT_NAME})
 # section: GENERAL
 # ====================================================================

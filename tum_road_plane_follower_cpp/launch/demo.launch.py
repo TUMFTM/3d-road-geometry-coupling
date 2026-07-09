@@ -2,10 +2,10 @@
 """Full end-to-end demo:
 - `road_plane_follower_node` drives a virtual vehicle around the chosen
   example track and publishes road-plane odometry / acceleration.
-- `external_influence_generator_node_from_csv` constructs
-  `ExternalInfluenceGeneratorNode` directly (no rclcpp_components / no
-  track_handler_cpp configuration), consumes the road-plane state, lifts
-  it into 3D, and publishes the road-geometry-induced vehicle load.
+- `road_geometry_coupler_node_from_csv` constructs `RoadGeometryCouplerNode`
+  directly (no rclcpp_components / no track_handler_cpp configuration),
+  consumes the road-plane state, lifts it into 3D, and publishes the
+  road-geometry-induced vehicle load as a `geometry_msgs/WrenchStamped`.
 - `ros2 bag record -a` records every active topic to a timestamped bag.
 
 Run: ros2 launch tum_road_plane_follower_cpp demo.launch.py
@@ -68,8 +68,8 @@ def generate_launch_description():
             ),
             Node(
                 package="tum_road_geometry_coupling_nodes_cpp",
-                executable="external_influence_generator_node_from_csv",
-                name="external_influence_generator",
+                executable="road_geometry_coupler_node_from_csv",
+                name="road_geometry_coupler",
                 output="screen",
                 parameters=[
                     {
