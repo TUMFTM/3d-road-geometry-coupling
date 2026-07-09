@@ -2,7 +2,7 @@
 <package format="3">
   <name>tum_road_geometry_coupling_nodes_cpp</name>
   <version>1.0.0</version>
-  <description>ROS 2 nodes wrapping the road-geometry-coupling library: RoadGeometryCouplerNode and ExternalInfluenceGeneratorNode.</description>
+  <description>ROS 2 node wrapping the road-geometry-coupling library: RoadGeometryCouplerNode, which publishes the road-geometry-induced vehicle load as a WrenchStamped.</description>
   <maintainer email="simon.sagmeister@tum.de">Simon Sagmeister</maintainer>
   <license>Apache 2.0</license>
 

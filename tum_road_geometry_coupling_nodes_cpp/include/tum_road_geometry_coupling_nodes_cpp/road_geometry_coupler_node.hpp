@@ -10,22 +10,21 @@
 #include "message_filters/time_synchronizer.h"
 
 #include <geometry_msgs/msg/accel_with_covariance_stamped.hpp>
+#include <geometry_msgs/msg/wrench_stamped.hpp>
 #include <nav_msgs/msg/odometry.hpp>
 
 #include "tum_road_geometry_coupling_cpp/track_data.hpp"
 #include "tum_road_geometry_coupling_cpp/road_geometry_coupler.hpp"
 #include "tsl_ros2_publisher_cpp/tsl_publisher.hpp"
-#include "tum_msgs/msg/tum_external_vehicle_influences.hpp"
 #include "tum_ros_helpers_cpp/qos.hpp"
-#include "tum_types_cpp/common.hpp"
 namespace tam::road_geometry_coupling
 {
-/// Base node that couples a planar vehicle model running in the road plane
-/// with a 3D track. Subscribes to road-plane odometry and acceleration,
-/// publishes the corresponding global-cartesian quantities and an
-/// \c ExternalVehicleInfluences message containing the road-geometry-induced
-/// vehicle load. Friction modifiers default to \c {1, 1, 1, 1}; derived nodes
-/// can override \c compute_friction_modifiers to inject external influences.
+/// Node that couples a planar vehicle model running in the road plane with a
+/// 3D track. Subscribes to road-plane odometry and acceleration, publishes the
+/// corresponding global-cartesian quantities and the road-geometry-induced
+/// vehicle load as a \c geometry_msgs/WrenchStamped. The wrench is one source
+/// consumed by the external-influence aggregator, which combines it with any
+/// other force, grip and road-height sources.
 class RoadGeometryCouplerNode : public rclcpp::Node
 {
 public:
@@ -46,15 +45,10 @@ protected:
   static constexpr std::string_view sub_topic_accel_ = "/simulation/road_plane/acceleration";
   static constexpr std::string_view pub_topic_odom_ = "/simulation/odometry";
   static constexpr std::string_view pub_topic_accel_ = "/simulation/acceleration";
-  static constexpr std::string_view pub_topic_external_influence_ =
-    "/simulation/road_plane/external_influences";
+  static constexpr std::string_view pub_topic_wrench_ =
+    "/simulation/external_influences/wrench/road_geometry";
 
-  /// Hook for derived classes to override the per-wheel friction modifiers
-  /// that are written into the published \c ExternalVehicleInfluences message.
-  /// The base implementation returns \c {1, 1, 1, 1}.
-  virtual tam::types::common::DataPerWheel<double> compute_friction_modifiers() const;
-
-  /// Model owned by the base class so derived classes can read its outputs.
+  /// Model owned by the node.
   RoadGeometryCoupler::UniquePtr model_;
 
 private:
@@ -72,8 +66,7 @@ private:
 
   rclcpp::Publisher<nav_msgs::msg::Odometry>::SharedPtr odometry_pub_{};
   rclcpp::Publisher<geometry_msgs::msg::AccelWithCovarianceStamped>::SharedPtr accel_pub_{};
-  rclcpp::Publisher<tum_msgs::msg::TUMExternalVehicleInfluences>::SharedPtr
-    external_influence_pub_{};
+  rclcpp::Publisher<geometry_msgs::msg::WrenchStamped>::SharedPtr wrench_pub_{};
 
   std::unique_ptr<tam::tsl::TSLPublisher> debug_publisher_;
 

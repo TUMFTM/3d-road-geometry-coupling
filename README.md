@@ -81,7 +81,7 @@ For the full mathematical derivation, validation against real-world data from th
 | --- | --- |
 | [`tum_road_geometry_coupling_cpp`](./tum_road_geometry_coupling_cpp/) | Core C++ library implementing the coupling algorithm. Independent of ROS 2. |
 | [`tum_road_geometry_coupling_py`](./tum_road_geometry_coupling_py/) | Python bindings around the C++ library, plus a [usage example](./tum_road_geometry_coupling_py/examples/basic_usage.py). |
-| [`tum_road_geometry_coupling_nodes_cpp`](./tum_road_geometry_coupling_nodes_cpp/) | ROS 2 nodes wrapping the library: `RoadGeometryCouplerNode` (pure coupling) and `ExternalInfluenceGeneratorNode` (adds external friction modifiers). |
+| [`tum_road_geometry_coupling_nodes_cpp`](./tum_road_geometry_coupling_nodes_cpp/) | ROS 2 node wrapping the library: `RoadGeometryCouplerNode`, which publishes the road-geometry-induced vehicle load as a `WrenchStamped`. |
 | [`tum_road_plane_follower_cpp`](./tum_road_plane_follower_cpp/) | Demo node that drives a virtual vehicle along the road-plane reference of a 3D track and publishes road-plane odometry / acceleration. Use it to feed the coupler node end-to-end. Together with the example tracks, this can be used to reproduced the experiments of the referenced research paper (for the synthetic tracks). |
 
 ## 3. Building
@@ -200,12 +200,11 @@ auto vehicle_load = coupler->get_vehicle_load();
 
 ### 4.3. ROS 2
 
-Two ROS 2 nodes are provided:
+One ROS 2 node is provided:
 
-- **`RoadGeometryCouplerNode`** &mdash; pure road-geometry coupling. Subscribes to road-plane odometry and acceleration, publishes the transformed 3D quantities and the road-geometry-induced vehicle load.
-- **`ExternalInfluenceGeneratorNode`** &mdash; inherits from the coupler and additionally applies external friction modifiers (e.g. tire temperature scaling, track grip scaling) on top of the coupling.
+- **`RoadGeometryCouplerNode`** &mdash; road-geometry coupling. Subscribes to road-plane odometry and acceleration, publishes the transformed 3D quantities and the road-geometry-induced vehicle load as a `geometry_msgs/WrenchStamped`. The wrench is one source for the external-influence aggregator, which combines it with any other force / grip / road-height sources.
 
-Both can be run as standalone executables or loaded as composable components inside a `component_container`. See [`tum_road_geometry_coupling_nodes_cpp`](./tum_road_geometry_coupling_nodes_cpp/) for parameters and topic interfaces.
+It can be run as a standalone executable or loaded as a composable component inside a `component_container`. See [`tum_road_geometry_coupling_nodes_cpp`](./tum_road_geometry_coupling_nodes_cpp/) for parameters and topic interfaces.
 
 ## 5. Citation
 

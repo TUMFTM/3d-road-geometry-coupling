@@ -22,10 +22,6 @@ RoadGeometryCouplerNode::RoadGeometryCouplerNode(
   model_ = std::make_unique<RoadGeometryCoupler>(track_data);
   init_after_model();
 }
-tam::types::common::DataPerWheel<double> RoadGeometryCouplerNode::compute_friction_modifiers() const
-{
-  return {1.0, 1.0, 1.0, 1.0};
-}
 void RoadGeometryCouplerNode::init_after_model()
 {
   debug_publisher_ = std::make_unique<tam::tsl::TSLPublisher>(this, model_->get_logger());
@@ -51,8 +47,8 @@ void RoadGeometryCouplerNode::init_after_model()
   odometry_pub_ = create_publisher<nav_msgs::msg::Odometry>(std::string(pub_topic_odom_), qos);
   accel_pub_ = create_publisher<geometry_msgs::msg::AccelWithCovarianceStamped>(
     std::string(pub_topic_accel_), qos);
-  external_influence_pub_ = create_publisher<tum_msgs::msg::TUMExternalVehicleInfluences>(
-    std::string(pub_topic_external_influence_), qos);
+  wrench_pub_ = create_publisher<geometry_msgs::msg::WrenchStamped>(
+    std::string(pub_topic_wrench_), qos);
 }
 void RoadGeometryCouplerNode::on_sub_inputs(
   nav_msgs::msg::Odometry::ConstSharedPtr odom,
@@ -71,33 +67,21 @@ void RoadGeometryCouplerNode::step()
   auto accel_msg = tam::type_conversions::accel_with_covariance_stamped_msg_from_type(
     model_->get_transformed_acceleration());
 
-  tum_msgs::msg::TUMExternalVehicleInfluences ext_msg;
-
   auto vehicle_load = model_->get_vehicle_load();
-  ext_msg.external_force = tam::type_conversions::vector_3d_msg_from_type(vehicle_load.force_N);
-  ext_msg.external_torque = tam::type_conversions::vector_3d_msg_from_type(vehicle_load.torque_Nm);
-
-  auto friction = compute_friction_modifiers();
-  ext_msg.lambda_mue.front_left = friction.front_left;
-  ext_msg.lambda_mue.front_right = friction.front_right;
-  ext_msg.lambda_mue.rear_left = friction.rear_left;
-  ext_msg.lambda_mue.rear_right = friction.rear_right;
-
-  ext_msg.z_height_road_m.front_left = 0;
-  ext_msg.z_height_road_m.front_right = 0;
-  ext_msg.z_height_road_m.rear_left = 0;
-  ext_msg.z_height_road_m.rear_right = 0;
+  geometry_msgs::msg::WrenchStamped wrench_msg;
+  wrench_msg.wrench.force = tam::type_conversions::vector_3d_msg_from_type(vehicle_load.force_N);
+  wrench_msg.wrench.torque = tam::type_conversions::vector_3d_msg_from_type(vehicle_load.torque_Nm);
 
   odom_msg.header.stamp = stamp;
   accel_msg.header.stamp = stamp;
-  ext_msg.header.stamp = stamp;
+  wrench_msg.header.stamp = stamp;
 
   odom_msg.header.frame_id = CoordinateFrames::local_cartesian;
   odom_msg.child_frame_id = CoordinateFrames::vehicle_cg;
   accel_msg.header.frame_id = CoordinateFrames::vehicle_cg;
-  ext_msg.header.frame_id = CoordinateFrames::vehicle_cg_footprint;
+  wrench_msg.header.frame_id = CoordinateFrames::vehicle_cg_footprint;
 
-  external_influence_pub_->publish(std::move(ext_msg));
+  wrench_pub_->publish(std::move(wrench_msg));
   odometry_pub_->publish(std::move(odom_msg));
   accel_pub_->publish(std::move(accel_msg));
 
