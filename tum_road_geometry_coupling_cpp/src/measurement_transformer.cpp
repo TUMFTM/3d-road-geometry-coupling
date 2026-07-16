@@ -131,9 +131,9 @@ void MeasurementTransformer::transform_orientation()
 
   // Add this angles to the roll and pitch angles measured in the road plane
   global_cartesian_odometry_.orientation_rad.x =
-    road_plane_odometry_.orientation_rad.x + slope_angle_rad;
+    road_plane_odometry_.orientation_rad.x + banking_angle_rad;
   global_cartesian_odometry_.orientation_rad.y =
-    road_plane_odometry_.orientation_rad.y + banking_angle_rad;
+    road_plane_odometry_.orientation_rad.y + slope_angle_rad;
   global_cartesian_odometry_.orientation_rad.z =
     calc_global_heading_from_chi(*track_, global_position_.s_m, global_position_.chi_rad);
 }
