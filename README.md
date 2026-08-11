@@ -24,6 +24,7 @@ This way, simpler planar models stay applicable on banked, sloped, and elevated 
 ![Ubuntu](https://img.shields.io/badge/Ubuntu-22.04%20%7C%2024.04-e3781f?logo=ubuntu&logoColor=white)
 <br>
 [![arXiv](https://img.shields.io/badge/arXiv-2608.09402-b31b1b.svg?logo=arxiv&logoColor=white)](https://arxiv.org/abs/2608.09402)
+[![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.21889999-b31b1b.svg?logo=zenodo&logoColor=white)](https://doi.org/10.5281/zenodo.21889999)
 </div>
 
 > **Plug-and-play with [Open Car Dynamics](https://github.com/TUMFTM/Open-Car-Dynamics).** This module accepts any planar vehicle dynamics model that can ingest external forces and moments at the center of gravity. It composes seamlessly with the planar models provided by Open Car Dynamics, but is in no way restricted to them.

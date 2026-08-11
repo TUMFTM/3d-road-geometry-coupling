@@ -38,6 +38,7 @@ repository-code: "https://github.com/TUMFTM/3d-road-geometry-coupling"
 url: "https://github.com/TUMFTM/3d-road-geometry-coupling"
 version: "1.0.0"
 date-released: "2026-08-11"
+doi: "10.5281/zenodo.21889999"
 # GitHub's "Cite this repository" button renders this paper instead of the software
 # metadata above. Update it (type, journal/collection-title, doi, year) if the preprint
 # is superseded by a peer-reviewed version.
