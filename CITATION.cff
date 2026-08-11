@@ -1,0 +1,66 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using the metadata from this file."
+title: "3D Road Geometry Coupling"
+type: software
+abstract: >-
+  A modular, open-source C++ library that couples any planar vehicle dynamics model with
+  3D road geometry without modifying the planar model itself. Sitting between a 2D
+  vehicle model and the 3D world, it transforms the vehicle's planar pose into its 3D
+  pose on the actual road surface, lifts the planar measurements into 3D space, and
+  computes the road-geometry-induced forces and moments that a planar model would
+  otherwise miss. This keeps simpler planar models applicable on banked, sloped, and
+  elevated tracks, including high-speed ovals such as the Las Vegas Motor Speedway. The
+  core library is independent of ROS 2; Python bindings and ROS 2 nodes are provided
+  alongside it.
+authors:
+  - family-names: "Sagmeister"
+    given-names: "Simon"
+    orcid: "https://orcid.org/0009-0002-9246-5456"
+    affiliation: "Technical University of Munich, Germany; School of Engineering & Design, Department of Mobility Systems Engineering, Institute of Automotive Technology"
+    email: "simon.sagmeister@tum.de"
+  - family-names: "Pitschi"
+    given-names: "Phillip"
+    orcid: "https://orcid.org/0009-0008-2165-2768"
+    affiliation: "Technical University of Munich, Germany"
+license: Apache-2.0
+keywords:
+  - "vehicle dynamics"
+  - "simulation"
+  - "3D road geometry"
+  - "road banking"
+  - "vehicle dynamics model"
+  - "autonomous racing"
+  - "autonomous driving"
+  - "ROS 2"
+  - "C++"
+  - "Python"
+repository-code: "https://github.com/TUMFTM/3d-road-geometry-coupling"
+url: "https://github.com/TUMFTM/3d-road-geometry-coupling"
+version: "1.0.0"
+date-released: "2026-08-11"
+# GitHub's "Cite this repository" button renders this paper instead of the software
+# metadata above. Update it (type, journal/collection-title, doi, year) if the preprint
+# is superseded by a peer-reviewed version.
+preferred-citation:
+  type: misc
+  title: "Beyond the Plane: Coupling Planar Vehicle Dynamics with Three-Dimensional Road Geometry"
+  authors:
+    - family-names: "Sagmeister"
+      given-names: "Simon"
+      orcid: "https://orcid.org/0009-0002-9246-5456"
+      affiliation: "Technical University of Munich, Germany"
+    - family-names: "Pitschi"
+      given-names: "Phillip"
+      orcid: "https://orcid.org/0009-0008-2165-2768"
+      affiliation: "Technical University of Munich, Germany"
+    - family-names: "Haja"
+      given-names: "Nico"
+      affiliation: "Technical University of Munich, Germany"
+    - family-names: "Lienkamp"
+      given-names: "Markus"
+      orcid: "https://orcid.org/0000-0002-9263-5323"
+      affiliation: "Technical University of Munich, Germany"
+  year: 2026
+  doi: "10.48550/arXiv.2608.09402"
+  url: "https://arxiv.org/abs/2608.09402"
+  notes: "Preprint, arXiv:2608.09402 [cs.RO]."

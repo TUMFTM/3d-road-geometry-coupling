@@ -22,6 +22,8 @@ This way, simpler planar models stay applicable on banked, sloped, and elevated 
 [![Python](https://img.shields.io/badge/Python-3.10%20%7C%203.12-e3781f?logo=python&logoColor=white)](https://www.python.org/)
 [![ROS 2](https://img.shields.io/badge/ROS_2-Humble%20%7C%20Jazzy-e3781f.svg?logo=ros&logoColor=white)](https://docs.ros.org/en/humble/)
 ![Ubuntu](https://img.shields.io/badge/Ubuntu-22.04%20%7C%2024.04-e3781f?logo=ubuntu&logoColor=white)
+<br>
+[![arXiv](https://img.shields.io/badge/arXiv-2608.09402-b31b1b.svg?logo=arxiv&logoColor=white)](https://arxiv.org/abs/2608.09402)
 </div>
 
 > **Plug-and-play with [Open Car Dynamics](https://github.com/TUMFTM/Open-Car-Dynamics).** This module accepts any planar vehicle dynamics model that can ingest external forces and moments at the center of gravity. It composes seamlessly with the planar models provided by Open Car Dynamics, but is in no way restricted to them.
@@ -210,9 +212,18 @@ It can be run as a standalone executable or loaded as a composable component ins
 
 If you use this library in your work, please cite our paper:
 
-> Sagmeister, S.; Pitschi, P.; Haja, N,; Lienkamp, M. *Beyond the Plane: Coupling Planar Vehicle Dynamics with 3D Road Geometry.*
-
-A BibTeX entry will be added once the paper is published.
+```bibtex
+@misc{sagmeister2026planecouplingplanarvehicle,
+      title={Beyond the Plane: Coupling Planar Vehicle Dynamics with Three-Dimensional Road Geometry}, 
+      author={Simon Sagmeister and Phillip Pitschi and Nico Haja and Markus Lienkamp},
+      year={2026},
+      eprint={2608.09402},
+      archivePrefix={arXiv},
+      primaryClass={cs.RO},
+      url={https://arxiv.org/abs/2608.09402}, 
+}
+```
+The preprint is available at [arXiv:2608.09402](https://arxiv.org/abs/2608.09402).
 
 ## 6. Related Projects
 
