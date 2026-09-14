@@ -1,9 +1,11 @@
 <div align="center">
-    <h1>3D Road Geometry Coupling</h1>
-    <p>
-        <i>Beyond the Plane: Coupling Planar Vehicle Dynamics with 3D Road Geometry</i>
-    </p>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/logo-dark.claude-opus-5.svg" width=1280>
+  <source media="(prefers-color-scheme: light)" srcset="docs/logo-light.claude-opus-5.svg" width=1280>
+  <img alt="3d-road-geometry-coupling-logo" src="docs/logo-dark.claude-opus-5.svg" width=1280>
+</picture>
 </div>
+
 
 <div align="center" style="margin-bottom: 30px;">
 <p>
